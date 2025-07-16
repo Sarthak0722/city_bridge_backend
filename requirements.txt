@@ -1,0 +1,9 @@
+fastapi 
+uvicorn 
+motor 
+numpy 
+scikit-learn 
+joblib
+python-dotenv
+
+pydantic
