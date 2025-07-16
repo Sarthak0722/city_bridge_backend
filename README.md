@@ -34,7 +34,7 @@ ml/            # Machine learning model and utilities
 ### 1. Clone the Repository
 ```bash
 git clone <repo-url>
-cd FinScoreX_Backend-main
+cd city_bridge_backend
 ```
 
 ### 2. Install Dependencies
@@ -99,7 +99,7 @@ The API will be live at: [http://localhost:7860/](http://localhost:7860/)
     {
       "message": "Score calculated and stored successfully.",
       "Business_ID": "BIZ123",
-      "AI_Credit_Score": 750.0
+      "AI_Credit_Score": 368.9644574940875
     }
     ```
 
