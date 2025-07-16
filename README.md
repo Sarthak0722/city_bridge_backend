@@ -1,117 +1,160 @@
-# 🚀 FinScoreX Backend
+# 🚀 crediscore
 
-This is the backend service for **FinScoreX**, a financial scoring system that evaluates business credit scores using machine learning. It is built with **FastAPI** and uses **MongoDB** for data storage.
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/) [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?logo=mongodb&logoColor=white)](https://www.mongodb.com/) [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)](https://www.python.org/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
+> **AI-powered Business Credit Scoring API**
 
-## 📌 Features
-
-✅ **FastAPI-based API** for high performance  
-✅ **MongoDB integration** for storing business financial data  
-✅ **Machine Learning model** to predict AI-based credit scores  
-✅ **JWT authentication (optional future addition)**  
-✅ **CORS support** for frontend integration  
+Empower your fintech solutions with real-time, AI-driven business credit scores. crediscore leverages machine learning and modern APIs to deliver fast, reliable, and insightful credit analytics for businesses of all sizes.
 
 ---
 
-## 🛠 Tech Stack
+## ✨ Features
 
-- **FastAPI** - API framework for high-speed applications  
-- **MongoDB** - NoSQL database for storing business financial data  
-- **Motor (AsyncIO)** - Asynchronous MongoDB client  
-- **NumPy, Scikit-Learn, Joblib** - For AI-based credit score calculations  
-- **Uvicorn** - ASGI server to run the FastAPI app  
+- 🤖 **AI-Powered Scoring**: Predict business credit scores using a trained ML model
+- 📊 **Historical Tracking**: Store and retrieve business credit score history
+- ⚡ **Blazing Fast API**: Built with FastAPI for high performance
+- 🗄️ **MongoDB Integration**: Persistent, scalable data storage
+- 🌐 **CORS Enabled**: Ready for frontend and cross-origin integrations
 
 ---
 
-## 📂 Project Structure
+## 🗂️ Project Structure
 
 ```
-FinScoreX_Backend/
-│── models/
-│   ├── model.py               # Pydantic data model for business records
-│── routes/
-│   ├── calculate_score.py     # API for calculating AI credit scores
-│   ├── cibil_scores.py        # API for fetching CIBIL scores from MongoDB
-│── ml/
-│   ├── cibil_score_model.pkl  # Pre-trained ML model
-│── database.py                # MongoDB connection setup
-│── main.py                    # FastAPI entry point
-│── requirements.txt           # Dependencies
+api/           # FastAPI app and entry point
+routes/        # API route definitions
+models/        # Pydantic models and database connection
+ml/            # Machine learning model and utilities
 ```
-
 
 ---
 
-## 🛠 Installation & Setup
+## 🚦 Getting Started
 
-### 1️⃣ Clone the repository  
+### 1. Clone the Repository
 ```bash
-git clone https://github.com/Pranav-Patel-123/FinScoreX_Backend.git
-cd FinScoreX_Backend
+git clone <repo-url>
+cd FinScoreX_Backend-main
 ```
-### 2️⃣ Create a virtual environment & install dependencies
-```
-python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+
+### 2. Install Dependencies
+```bash
 pip install -r requirements.txt
 ```
 
-### 3️⃣ Set up environment variables
-Create a .env file and add the MongoDB URI:
-```
-MONGO_URI=mongodb+srv://your_mongodb_connection_string
-```
-
-### 4️⃣ Run the server
-```
-uvicorn main:app --reload
+### 3. Configure Environment Variables
+Create a `.env` file in the root directory:
+```env
+MONGO_URI=mongodb://<username>:<password>@<host>:<port>/<database>
 ```
 
-## 📖 API Endpoints
+### 4. Run the Application
+```bash
+# Using app.py
+python app.py
 
-### **Root**
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| `GET`  | `/`     | Root API, checks if the server is running |
+# Or with uvicorn
+uvicorn api.main:app --host 0.0.0.0 --port 7860 --reload
+```
 
-### **Credit Score Calculation**
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| `POST` | `/calculate/` | Calculate AI credit score & store data in MongoDB |
-
-### **Retrieve CIBIL Scores**
-| Method | Endpoint | Description |
-|--------|---------|-------------|
-| `GET`  | `/cibil/` | Retrieve stored credit scores from MongoDB |
+The API will be live at: [http://localhost:7860/](http://localhost:7860/)
 
 ---
 
-## 📊 Machine Learning Model
+## 📚 API Documentation
 
-The system uses a **pre-trained ML model (`cibil_score_model.pkl`)** to calculate AI-based credit scores based on financial inputs.  
+### 🩺 Health Check
+- **GET /**
+  - _Returns:_ `{ "message": "CIBIL Score API is running!" }`
 
-### **Key Features Considered in Score Calculation:**
-- **Loan Repayment History** (`Early Payment`, `Delayed`, `Defaulted`)  
-- **Outstanding Debt & Monthly Revenue**  
-- **Cash Flow Stability & Business Growth Rate**  
-- **Supplier Payment Delay & Credit Default History**  
-- **Macroeconomic Risks & Social Media Sentiment**  
+### 📝 Calculate Business Credit Score
+- **POST /calculate/**
+  - _Description:_ Submit business data to calculate and store a credit score.
+  - _Request Body Example:_
+    ```json
+    {
+      "Business_ID": "BIZ123",
+      "Business_Type": "Retail",
+      "Industry_Sector": "Consumer Goods",
+      "Years_in_Operation": 5,
+      "Monthly_Revenue": 100000.0,
+      "Monthly_Expenses": 80000.0,
+      "Loan_Repayment_History": "Early Payment",
+      "Outstanding_Debt": 20000.0,
+      "Cash_Flow_Stability_Score": 0.8,
+      "GST_Filings": 12,
+      "Supplier_Payment_Delay": 2,
+      "Ecommerce_Sales_Volume": 50000.0,
+      "Digital_Invoice_Payment_Rate": 0.9,
+      "Credit_Default_History": 0,
+      "Business_Growth_Rate": 0.15,
+      "Macroeconomic_Risk_Score": 0.3,
+      "Social_Media_Sentiment": 0.7,
+      "Regulatory_Compliance_Score": 0.95,
+      "Month": "2024-06"
+    }
+    ```
+  - _Response Example:_
+    ```json
+    {
+      "message": "Score calculated and stored successfully.",
+      "Business_ID": "BIZ123",
+      "AI_Credit_Score": 750.0
+    }
+    ```
 
-The model normalizes input features and predicts a **CIBIL Score**.
+### 📈 Get CIBIL Scores
+- **GET /cibil/**
+  - _Description:_ Retrieve all stored business credit scores and their history.
+  - _Response Example:_
+    ```json
+    {
+      "months": ["2024-05", "2024-06"],
+      "data": [
+        {
+          "_id": "...",
+          "businessId": "BIZ123",
+          "businessType": "Retail",
+          "industrySector": "Consumer Goods",
+          "month": "2024-06",
+          "date": "2024-06-15",
+          "score": 750.0,
+          "previousScore": 740.0
+        }
+      ]
+    }
+    ```
+
+---
+
+## ⚙️ Environment Variables
+
+| Variable    | Description                  | Required |
+|-------------|------------------------------|----------|
+| `MONGO_URI` | MongoDB connection string    |   ✅     |
+
+---
+
+## 🧩 Dependencies
+
+- [FastAPI](https://fastapi.tiangolo.com/)
+- [Uvicorn](https://www.uvicorn.org/)
+- [Motor](https://motor.readthedocs.io/en/stable/)
+- [NumPy](https://numpy.org/)
+- [scikit-learn](https://scikit-learn.org/)
+- [joblib](https://joblib.readthedocs.io/en/latest/)
+- [python-dotenv](https://pypi.org/project/python-dotenv/)
+- [pydantic](https://docs.pydantic.dev/)
 
 ---
 
 ## 🤝 Contributing
 
-1. **Fork the repository**  
-2. **Create a new branch (`git checkout -b feature-branch`)**  
-3. **Commit your changes (`git commit -m "Added new feature"`)**  
-4. **Push to your branch (`git push origin feature-branch`)**  
-5. **Open a Pull Request**  
+Contributions, issues, and feature requests are welcome!<br>
+Feel free to check the [issues page](../../issues) or submit a pull request.
 
 ---
 
-## 📜 License
+## 📄 License
 
-This project is licensed under the **MIT License**.
+This project is licensed under the [MIT License](LICENSE).
